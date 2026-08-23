@@ -1,0 +1,228 @@
+// LinuxAtlas — Prisma schema
+//
+// Structured, relational data lives here (metadata, filtering, relationships,
+// comparison fields). Long-form documentation prose lives in MDX under
+// content/ — see lib/content/mdx.ts for how the two are joined by slug.
+//
+// After editing this file:
+//   npx prisma generate      // regenerate the typed client
+//   npx prisma migrate dev   // create + apply a migration
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Distributions
+// ---------------------------------------------------------------------------
+
+model Distribution {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  name                String
+  description         String
+  family              String // e.g. "Arch", "Debian", "RPM", "Independent"
+  basedOn             String? // human label, e.g. "Debian", null if independent
+  packageManager      String
+  initSystem          String
+  releaseModel        String // "Rolling" | "Stable" | "LTS / Stable" | ...
+  architectures       String[] // e.g. ["x86_64", "ARM64"]
+  desktopEnvironments String[] // e.g. ["GNOME", "KDE Plasma"]
+  difficulty          Difficulty
+  website             String?
+  documentationUrl    String?
+  logo                String? // icon identifier or URL
+  sourceUrl           String?
+  sourceName          String?
+  lastVerifiedAt      DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  sections        DistributionSection[]
+  commandExamples CommandExample[]
+  relatedFrom     RelatedContent[]       @relation("RelatedFrom")
+  relatedTo       RelatedContent[]       @relation("RelatedTo")
+
+  @@index([family])
+  @@index([packageManager])
+  @@index([releaseModel])
+  @@index([difficulty])
+}
+
+model DistributionSection {
+  id             String   @id @default(cuid())
+  distributionId String
+  distribution   Distribution @relation(fields: [distributionId], references: [id], onDelete: Cascade)
+  slug           String // e.g. "philosophy", "installation" — also the MDX section id
+  title          String
+  content        String // short/plain fallback; full prose lives in MDX
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([distributionId, slug])
+  @@index([distributionId, order])
+}
+
+// ---------------------------------------------------------------------------
+// Commands
+// ---------------------------------------------------------------------------
+
+model Command {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  syntax      String
+  category    String // e.g. "Filesystem", "Process Management", "Networking"
+  sourceUrl   String?
+  sourceName  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  examples CommandExample[]
+  options  CommandOption[]
+
+  relatedFrom RelatedContent[] @relation("RelatedFrom")
+  relatedTo   RelatedContent[] @relation("RelatedTo")
+
+  @@index([category])
+}
+
+model CommandExample {
+  id             String   @id @default(cuid())
+  commandId      String
+  command        Command      @relation(fields: [commandId], references: [id], onDelete: Cascade)
+  code           String
+  description    String
+  distributionId String?
+  distribution   Distribution? @relation(fields: [distributionId], references: [id], onDelete: SetNull)
+  order          Int          @default(0)
+
+  @@index([commandId, order])
+}
+
+model CommandOption {
+  id          String  @id @default(cuid())
+  commandId   String
+  command     Command @relation(fields: [commandId], references: [id], onDelete: Cascade)
+  flag        String
+  description String
+  order       Int     @default(0)
+
+  @@index([commandId, order])
+}
+
+// ---------------------------------------------------------------------------
+// Package managers
+// ---------------------------------------------------------------------------
+
+model PackageManager {
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  name               String
+  command             String
+  description        String
+  distributionFamily String // e.g. "Debian / Ubuntu"
+  installCmd         String
+  updateCmd          String
+  searchCmd          String
+  removeCmd          String
+  sourceUrl          String?
+  sourceName         String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  relatedFrom RelatedContent[] @relation("RelatedFrom")
+  relatedTo   RelatedContent[] @relation("RelatedTo")
+}
+
+// ---------------------------------------------------------------------------
+// Guides
+// ---------------------------------------------------------------------------
+
+model Guide {
+  id          String     @id @default(cuid())
+  slug        String     @unique
+  title       String
+  description String
+  category    String
+  difficulty  Difficulty
+  readMinutes Int
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  relatedFrom RelatedContent[] @relation("RelatedFrom")
+  relatedTo   RelatedContent[] @relation("RelatedTo")
+
+  @@index([category])
+  @@index([difficulty])
+}
+
+// ---------------------------------------------------------------------------
+// Generic related-content graph
+//
+// A single polymorphic edge table keeps "Arch Linux -> CachyOS" and
+// "systemctl -> journalctl" in one place instead of N join tables — trades a
+// little type safety (enforced at the service layer, not the DB) for a
+// system that doesn't need a new table every time a new content type ships.
+// ---------------------------------------------------------------------------
+
+enum ContentType {
+  DISTRIBUTION
+  COMMAND
+  PACKAGE_MANAGER
+  GUIDE
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+model RelatedContent {
+  id String @id @default(cuid())
+
+  sourceType ContentType
+  sourceSlug String
+
+  targetType ContentType
+  targetSlug String
+
+  label String? // optional human label, e.g. "Also try"
+  order Int     @default(0)
+
+  // Optional typed back-references — populated only when the source/target
+  // happens to be a Distribution/Command/PackageManager/Guide, purely so
+  // Prisma can cascade-delete cleanly. The (sourceType, sourceSlug) pair
+  // above remains the source of truth the service layer queries against.
+  distributionAsSourceId String?
+  distributionAsSource   Distribution?   @relation("RelatedFrom", fields: [distributionAsSourceId], references: [id], onDelete: Cascade)
+  distributionAsTargetId String?
+  distributionAsTarget   Distribution?   @relation("RelatedTo", fields: [distributionAsTargetId], references: [id], onDelete: Cascade)
+
+  commandAsSourceId String?
+  commandAsSource   Command? @relation("RelatedFrom", fields: [commandAsSourceId], references: [id], onDelete: Cascade)
+  commandAsTargetId String?
+  commandAsTarget   Command? @relation("RelatedTo", fields: [commandAsTargetId], references: [id], onDelete: Cascade)
+
+  packageManagerAsSourceId String?
+  packageManagerAsSource   PackageManager? @relation("RelatedFrom", fields: [packageManagerAsSourceId], references: [id], onDelete: Cascade)
+  packageManagerAsTargetId String?
+  packageManagerAsTarget   PackageManager? @relation("RelatedTo", fields: [packageManagerAsTargetId], references: [id], onDelete: Cascade)
+
+  guideAsSourceId String?
+  guideAsSource   Guide? @relation("RelatedFrom", fields: [guideAsSourceId], references: [id], onDelete: Cascade)
+  guideAsTargetId String?
+  guideAsTarget   Guide? @relation("RelatedTo", fields: [guideAsTargetId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceType, sourceSlug, targetType, targetSlug])
+  @@index([sourceType, sourceSlug])
+}

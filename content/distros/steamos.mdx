@@ -1,0 +1,29 @@
+---
+title: SteamOS
+slug: steamos
+---
+
+## Overview
+
+SteamOS is Valve's Arch-based distribution built for gaming, running on the Steam Deck and select living-room PCs. It boots into a console-style interface (Big Picture / gamescope) rather than a traditional desktop by default.
+
+## Philosophy
+
+SteamOS optimizes for a locked-down, immutable base that's hard to break during normal use, while still offering a "Desktop Mode" underneath for people who want full Arch-style control when they need it.
+
+## Installation
+
+Most people encounter SteamOS pre-installed on a Steam Deck; installing it on other hardware means flashing an official image, since Valve doesn't distribute a general-purpose installer for arbitrary PCs.
+
+## Package Management
+
+The base system is read-only and updated as atomic images. Desktop Mode exposes pacman for anyone who steps outside the gaming UI:
+
+```bash
+sudo pacman -Syu
+sudo pacman -S <package>
+```
+
+## Filesystem
+
+The root filesystem is read-only and A/B updated (similar to ChromeOS), with a writable overlay for user data — this is what makes SteamOS resilient to a failed or interrupted update.

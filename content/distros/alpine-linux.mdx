@@ -1,0 +1,30 @@
+---
+title: Alpine Linux
+slug: alpine-linux
+---
+
+## Overview
+
+Alpine uses musl libc and BusyBox instead of glibc and GNU coreutils, producing images often under 8MB — a favorite base for containers, where every extra megabyte multiplies across thousands of running instances.
+
+## Philosophy
+
+Security and simplicity above all: a small attack surface, PaX/grsecurity-hardened kernel patches historically, and minimal defaults that require deliberate opt-in for anything beyond a bare system.
+
+## Installation
+
+The `setup-alpine` script walks through a text-based installation in minutes on bare metal, VMs, or containers — there's no graphical installer, by design.
+
+## Package Management
+
+apk installs from small, versioned repositories with a straightforward, fast resolver:
+
+```bash
+sudo apk update && sudo apk upgrade
+sudo apk add <package>
+apk search <term>
+```
+
+## Filesystem
+
+ext4 is typical for persistent installs; Alpine also runs comfortably as a diskless, RAM-based system that reloads its configuration from a backing store on boot.

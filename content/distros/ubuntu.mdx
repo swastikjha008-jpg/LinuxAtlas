@@ -1,0 +1,35 @@
+---
+title: Ubuntu
+slug: ubuntu
+---
+
+## Overview
+
+Ubuntu is built on Debian and optimized for approachability — a guided graphical installer, sane defaults, and broad hardware support out of the box. It's the distribution most people's first Linux experience runs on.
+
+## Philosophy
+
+Ubuntu prioritizes usability and predictable releases. Long Term Support (LTS) versions ship every two years with five years of security updates, giving businesses and casual users alike a stable target that doesn't shift under them.
+
+## Installation
+
+The Ubuntu installer (Subiquity) walks through disk setup, user accounts, and optional third-party driver installation with minimal manual steps — most installs complete in under fifteen minutes.
+
+## Package Management
+
+apt manages `.deb` packages from Ubuntu's repositories:
+
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install docker.io
+```
+
+Snap packages are also pre-installed for sandboxed, auto-updating applications:
+
+```bash
+sudo snap install spotify
+```
+
+## Filesystem
+
+ext4 is the default filesystem; ZFS is offered as an experimental option during install for users who want native snapshots and pooled storage.

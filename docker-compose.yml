@@ -1,0 +1,38 @@
+# Local infrastructure only — the Next.js app itself still runs via `npm run dev`.
+#
+#   docker compose up -d
+#
+# Then set DATABASE_URL in .env to:
+#   postgresql://linuxatlas:linuxatlas@localhost:5432/linuxatlas?schema=public
+#
+# And, if you want to try Meilisearch instead of the built-in local search:
+#   MEILISEARCH_HOST="http://localhost:7700"
+#   MEILISEARCH_API_KEY="dev-master-key"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: linuxatlas
+      POSTGRES_PASSWORD: linuxatlas
+      POSTGRES_DB: linuxatlas
+    ports:
+      - "5432:5432"
+    volumes:
+      - linuxatlas_postgres_data:/var/lib/postgresql/data
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.11
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: dev-master-key
+      MEILI_ENV: development
+    ports:
+      - "7700:7700"
+    volumes:
+      - linuxatlas_meili_data:/meili_data
+
+volumes:
+  linuxatlas_postgres_data:
+  linuxatlas_meili_data:

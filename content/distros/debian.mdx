@@ -1,0 +1,30 @@
+---
+title: Debian
+slug: debian
+---
+
+## Overview
+
+Debian is one of the oldest Linux distributions, known for exhaustive testing before anything reaches its Stable branch. It's the base that Ubuntu, Linux Mint, and hundreds of other distributions build on top of.
+
+## Philosophy
+
+Debian's [social contract](https://www.debian.org/social_contract) commits it to being 100% free software with no vendor lock-in — decisions are made by an elected project leader and thousands of volunteer developers through a formal constitution.
+
+## Installation
+
+The classic Debian installer offers fine-grained control over partitioning, package selection, and network configuration; a graphical variant covers most desktop use cases without sacrificing that control.
+
+## Package Management
+
+apt and dpkg manage `.deb` packages across three branches: stable, testing, and unstable (sid).
+
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install <package>
+dpkg -l          # list installed packages
+```
+
+## Filesystem
+
+ext4 by default, with btrfs and XFS available at install time for users who want copy-on-write semantics or high-throughput workloads respectively.

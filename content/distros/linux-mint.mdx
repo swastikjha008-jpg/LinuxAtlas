@@ -1,0 +1,29 @@
+---
+title: Linux Mint
+slug: linux-mint
+---
+
+## Overview
+
+Linux Mint is an Ubuntu-based distribution focused on a familiar, out-of-the-box desktop experience — its Cinnamon desktop deliberately echoes a traditional taskbar-and-start-menu layout that Windows users find immediately comfortable.
+
+## Philosophy
+
+Mint prioritizes "it just works" over cutting-edge features. Codecs, drivers, and common desktop conveniences are included by default instead of requiring a post-install checklist.
+
+## Installation
+
+Mint's installer is a lightly customized version of Ubuntu's, with the same disk setup and account creation flow, plus Mint-specific welcome screens pointing new users to driver and update tools.
+
+## Package Management
+
+apt underneath, wrapped by Mint's own Update Manager and Software Manager GUIs for people who prefer not to touch a terminal:
+
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install <package>
+```
+
+## Filesystem
+
+ext4 by default, mirroring Ubuntu; Mint does not push btrfs or ZFS as install-time options.

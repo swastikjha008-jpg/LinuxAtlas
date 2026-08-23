@@ -1,0 +1,22 @@
+---
+title: Package management
+slug: package-management
+---
+
+## Overview
+
+Package managers track installed software, resolve dependencies, and fetch signed packages from trusted repositories — the mechanism differs by distro family, but the job is the same everywhere.
+
+## Across distros
+
+```bash
+sudo apt install <package>      # Debian / Ubuntu
+sudo pacman -S <package>        # Arch
+sudo dnf install <package>      # Fedora
+sudo apk add <package>          # Alpine
+sudo zypper install <package>   # openSUSE
+```
+
+## Why it matters
+
+Every package manager solves the same three problems: where do I get this software, what does it depend on, and how do I remove it cleanly later. Learning one deeply makes the others easy to pick up — the concepts transfer even when the flags don't.

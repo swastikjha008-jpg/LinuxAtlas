@@ -1,0 +1,21 @@
+---
+title: Networking fundamentals
+slug: networking-fundamentals
+---
+
+## Overview
+
+Modern distros configure networking through NetworkManager or systemd-networkd, managing interfaces, routes, and DNS resolution declaratively rather than through hand-edited `ifconfig` scripts.
+
+## Useful commands
+
+```bash
+ip addr show          # list interfaces and addresses
+ip route show          # show the routing table
+nmcli device status    # NetworkManager's view of things
+ss -tulpn              # listening ports and their owning processes
+```
+
+## DNS
+
+Most distros now route DNS through `systemd-resolved` or NetworkManager's own resolver, with `/etc/resolv.conf` often a symlink into a runtime-generated file rather than something you edit directly.

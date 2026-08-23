@@ -1,0 +1,24 @@
+---
+title: Understanding permissions
+slug: understanding-permissions
+---
+
+## Overview
+
+Every file has an owner, a group, and a permission triplet (read/write/execute) for owner, group, and others, commonly shown as `rwxr-xr-x`. The first character indicates file type (`-` for a regular file, `d` for a directory).
+
+## chmod & chown
+
+`chmod` changes what a permission set allows; `chown` changes who owns the file.
+
+```bash
+chmod +x deploy.sh        # make a file executable
+chmod 644 config.yml      # owner read/write, group and others read-only
+sudo chown alice:staff report.csv
+```
+
+Numeric modes like `755` map directly to the rwx triplets: 7 (rwx) for owner, 5 (r-x) for group, 5 (r-x) for others.
+
+## A common trap
+
+A script that "won't run" is very often just missing its executable bit — `chmod +x` before anything more elaborate.

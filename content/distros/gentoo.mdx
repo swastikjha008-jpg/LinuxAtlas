@@ -1,0 +1,29 @@
+---
+title: Gentoo
+slug: gentoo
+---
+
+## Overview
+
+Gentoo is a source-based distribution offering total control over how software is built — packages compile from source on your machine with flags you choose, rather than arriving as prebuilt binaries.
+
+## Philosophy
+
+Gentoo's Portage system treats compile-time configuration (USE flags) as a first-class concept: you decide whether a package builds with, say, PulseAudio or systemd support, at the moment you install it.
+
+## Installation
+
+Installation is entirely manual and text-based — partitioning, a stage3 tarball extraction, and a chroot-based build of the base system, often taking hours due to source compilation rather than minutes.
+
+## Package Management
+
+Portage (`emerge`) resolves dependencies and compiles from source:
+
+```bash
+emerge --sync
+emerge --ask <package>
+```
+
+## Filesystem
+
+No opinion — Gentoo users typically choose based on the same trade-offs as any distro, though the long compile times make snapshot-capable filesystems like btrfs popular for pre-upgrade rollback points.

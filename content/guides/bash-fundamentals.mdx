@@ -1,0 +1,27 @@
+---
+title: Bash fundamentals
+slug: bash-fundamentals
+---
+
+## Overview
+
+Bash scripts chain commands with pipes and redirects, and support variables, conditionals, and loops much like any scripting language — the syntax is just terser than most.
+
+## The basics
+
+```bash
+name="world"
+echo "Hello, $name"
+
+if [ -f "$1" ]; then
+  echo "File exists"
+fi
+
+for f in *.log; do
+  gzip "$f"
+done
+```
+
+## Pipes and redirects
+
+`|` sends one command's output into the next; `>` and `>>` redirect output to a file (overwrite vs. append); `2>&1` merges stderr into stdout — the combination behind most one-liners you'll copy from the internet.

@@ -1,0 +1,30 @@
+---
+title: openSUSE
+slug: opensuse
+---
+
+## Overview
+
+openSUSE ships in two flavors: Leap (stable, versioned) and Tumbleweed (rolling), sharing tooling with SUSE Linux Enterprise — so skills learned here carry directly into enterprise SUSE deployments.
+
+## Philosophy
+
+openSUSE emphasizes robust system administration tooling — YaST provides a unified interface for nearly every configuration task, from partitioning to firewall rules to user management, in one consistent UI.
+
+## Installation
+
+YaST's installer handles partitioning, software selection, and network configuration in one guided flow, and the same YaST modules remain available after install for ongoing system management.
+
+## Package Management
+
+zypper manages RPM packages with strong dependency resolution and easy repository management:
+
+```bash
+sudo zypper update
+sudo zypper install <package>
+zypper se <term>     # search for a package
+```
+
+## Filesystem
+
+btrfs is default on the root partition with automatic snapshots via Snapper — every zypper transaction gets a rollback point automatically.

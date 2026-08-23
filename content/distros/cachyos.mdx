@@ -1,0 +1,29 @@
+---
+title: CachyOS
+slug: cachyos
+---
+
+## Overview
+
+CachyOS is an Arch-based distribution focused on performance — a custom-patched kernel, CPU-optimized (x86-64-v3/v4) package repositories, and BORE/EEVDF scheduler tuning aimed at gaming and latency-sensitive workloads.
+
+## Philosophy
+
+CachyOS keeps Arch's philosophy of transparency and user control, but front-loads the performance tuning that an Arch user would otherwise assemble by hand — optimized packages, scheduler choices, and kernel variants are offered as install-time options.
+
+## Installation
+
+CachyOS uses a graphical Calamares-based installer, a notably lower barrier to entry than a stock Arch install while still landing on an Arch-compatible system underneath.
+
+## Package Management
+
+pacman, pointed at both standard Arch repositories and CachyOS's own CPU-optimized package sets:
+
+```bash
+sudo pacman -Syu
+sudo pacman -S <package>
+```
+
+## Filesystem
+
+btrfs is commonly offered at install time with automatic snapshot integration, though ext4 remains an option.

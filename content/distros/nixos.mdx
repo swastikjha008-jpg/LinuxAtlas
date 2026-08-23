@@ -1,0 +1,29 @@
+---
+title: NixOS
+slug: nixos
+---
+
+## Overview
+
+NixOS is a declarative distribution where the entire system — packages, services, configuration files — is defined in one reproducible configuration file rather than assembled through imperative commands over time.
+
+## Philosophy
+
+Change the config, run one command, and the system converges to match it exactly — including rolling back cleanly if the new generation doesn't boot. Two machines with the same NixOS config produce functionally identical systems.
+
+## Installation
+
+Installation involves partitioning, then writing (or generating) `configuration.nix` describing the target system, followed by a single build-and-switch command that constructs the whole system atomically.
+
+## Package Management
+
+The Nix package manager underlies everything — packages are immutable and content-addressed, so installing one never mutates or breaks another:
+
+```bash
+nixos-rebuild switch   # rebuild the system from configuration.nix
+nix-env -iA nixpkgs.<package>   # imperative install, less idiomatic on NixOS
+```
+
+## Filesystem
+
+No opinion, though ext4 is the common default; NixOS's reproducibility model matters far more than the underlying filesystem choice.

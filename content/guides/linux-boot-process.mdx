@@ -1,0 +1,25 @@
+---
+title: Linux boot process
+slug: linux-boot-process
+---
+
+## Overview
+
+Boot moves through firmware (BIOS/UEFI), a bootloader like GRUB, the kernel, and finally the init system (usually systemd) bringing services online.
+
+## The stages
+
+1. **Firmware** — POST, hardware init, hands off to the bootloader
+2. **Bootloader** (GRUB, systemd-boot) — loads the selected kernel and initramfs
+3. **Kernel** — mounts the real root filesystem, starts PID 1
+4. **Init system** — systemd (PID 1) brings up targets and services in dependency order
+
+## Debugging a slow boot
+
+```bash
+systemd-analyze              # total boot time
+systemd-analyze blame        # which services took longest
+systemd-analyze critical-chain
+```
+
+These three commands solve the large majority of "why does my machine take so long to boot" questions.

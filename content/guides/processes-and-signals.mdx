@@ -1,0 +1,22 @@
+---
+title: Processes and signals
+slug: processes-and-signals
+---
+
+## Overview
+
+Every running program is a process with a PID. Processes can spawn children, forming a tree you can inspect with `pstree`, and every process eventually reports an exit status to its parent.
+
+## Signals
+
+Signals are how you communicate with a running process without touching its stdin. `SIGTERM` (the default from `kill`) asks a process to shut down cleanly; `SIGKILL` (`kill -9`) terminates it immediately with no chance to clean up.
+
+```bash
+kill 4821          # SIGTERM — ask nicely
+kill -9 4821        # SIGKILL — no negotiation
+pkill -f "node server.js"
+```
+
+## Why the distinction matters
+
+Reaching for `-9` first is a common habit that skips a process's cleanup logic — open file handles, temp files, in-flight writes. Try `SIGTERM` first and only escalate if the process ignores it.

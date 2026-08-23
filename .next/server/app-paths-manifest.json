@@ -1,0 +1,8 @@
+{
+  "/distros/page": "app/distros/page.js",
+  "/page": "app/page.js",
+  "/commands/page": "app/commands/page.js",
+  "/guides/page": "app/guides/page.js",
+  "/compare/page": "app/compare/page.js",
+  "/package-managers/page": "app/package-managers/page.js"
+}

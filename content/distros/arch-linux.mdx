@@ -1,0 +1,50 @@
+---
+title: Arch Linux
+slug: arch-linux
+---
+
+## Overview
+
+Arch Linux follows the KISS principle — keep it simple, stupid — shipping only what you explicitly install. There's no bundled desktop environment, no bloat, and no hand-holding installer. You build the system you want, piece by piece.
+
+Where most distributions optimize for "works out of the box," Arch optimizes for "you know exactly what's running and why." That trade-off is the entire pitch.
+
+## Philosophy
+
+Arch favors simplicity, transparency, and user control over convenience. Configuration files stay close to upstream defaults so you always know what's running and why — Arch rarely patches software to behave differently than its developers intended.
+
+The [Arch Way](https://wiki.archlinux.org/title/Arch_Linux) — simplicity, modernity, pragmatism, user-centrality, versatility — has shaped a distribution that assumes competence rather than hiding complexity behind tooling.
+
+## Installation
+
+Installation happens from a minimal live ISO using the command line:
+
+```bash
+# partition and format the target disk, then mount it at /mnt
+mount /dev/sda1 /mnt
+
+# bootstrap the base system
+pacstrap -K /mnt base linux linux-firmware
+
+# generate the filesystem table
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# chroot in to configure the bootloader, locale, and hostname
+arch-chroot /mnt
+```
+
+There's an archinstall guided script for people who want less typing, but the manual path is still the canonical way most Arch users learn the system.
+
+## Package Management
+
+pacman is Arch's package manager, backed by the Arch User Repository (AUR) for community packages. Updates are frequent since Arch is rolling-release — there's no "next major version" to wait for, packages update continuously.
+
+```bash
+sudo pacman -Syu           # sync and upgrade everything
+sudo pacman -S neovim      # install a package
+yay -S visual-studio-code-bin  # install from the AUR, via a helper
+```
+
+## Filesystem
+
+Arch has no opinion on filesystem — ext4, btrfs, and xfs are all common choices, configured entirely by you at install time. btrfs with snapshots is increasingly popular for easy rollbacks after a bad update.

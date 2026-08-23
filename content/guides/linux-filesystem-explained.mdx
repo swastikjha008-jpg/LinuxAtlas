@@ -1,0 +1,21 @@
+---
+title: Linux filesystem explained
+slug: linux-filesystem-explained
+---
+
+## Overview
+
+Everything in Linux lives under a single root, `/`, unlike the multiple drive letters used elsewhere. Standard directories like `/etc`, `/var`, and `/home` each have a defined purpose under the Filesystem Hierarchy Standard (FHS), so once you know the convention, any distro's layout is predictable.
+
+## Key directories
+
+- `/etc` — system-wide configuration files, almost always plain text
+- `/var` — variable data: logs, caches, spool files, databases
+- `/home` — per-user data and configuration
+- `/usr` — the bulk of installed software and its resources
+- `/tmp` — temporary files, typically cleared on reboot
+- `/proc` and `/sys` — virtual filesystems exposing kernel and process state, not real files on disk
+
+## Why it matters
+
+Knowing this layout means you always know where to look — a misbehaving service's config is in `/etc`, its logs are in `/var/log`, and its binary is somewhere under `/usr`. That predictability is one of Linux's most underrated conveniences once it clicks.

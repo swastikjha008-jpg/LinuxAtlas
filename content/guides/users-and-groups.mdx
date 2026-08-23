@@ -1,0 +1,21 @@
+---
+title: Users and groups
+slug: users-and-groups
+---
+
+## Overview
+
+Users belong to groups that grant shared permissions. `useradd`, `usermod`, and the sudoers file control who can do what.
+
+## Common commands
+
+```bash
+sudo useradd -m -s /bin/bash alice
+sudo usermod -aG docker alice     # add alice to the docker group
+sudo passwd alice
+sudo visudo                       # safely edit /etc/sudoers
+```
+
+## Why groups matter
+
+Rather than granting permissions to individual users one at a time, most access control on Linux runs through group membership — adding a user to `docker` or `sudo` is usually the entire fix for a permissions problem.

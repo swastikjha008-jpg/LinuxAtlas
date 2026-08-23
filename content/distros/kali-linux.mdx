@@ -1,0 +1,29 @@
+---
+title: Kali Linux
+slug: kali-linux
+---
+
+## Overview
+
+Kali is a Debian-based distribution purpose-built for penetration testing, digital forensics, and security research, maintained by Offensive Security. It ships with hundreds of security tools preinstalled and pre-configured to work together.
+
+## Philosophy
+
+Kali exists for one audience: security professionals and students who need a consistent, well-maintained toolkit rather than assembling one package at a time. It is explicitly not meant as a general daily-driver desktop.
+
+## Installation
+
+Kali installs like Debian, with an additional metapackage selection step letting you choose tool categories (wireless, web, forensics, and so on) rather than installing everything by default.
+
+## Package Management
+
+apt manages packages, layered with Kali's own security-tool repositories:
+
+```bash
+sudo apt update && sudo apt full-upgrade
+sudo apt install <tool-name>
+```
+
+## Filesystem
+
+ext4 by default, matching its Debian base; forensic workflows often mount evidence images read-only alongside the main filesystem rather than changing Kali's own layout.

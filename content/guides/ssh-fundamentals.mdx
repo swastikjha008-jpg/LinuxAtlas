@@ -1,0 +1,25 @@
+---
+title: SSH fundamentals
+slug: ssh-fundamentals
+---
+
+## Overview
+
+SSH authenticates with key pairs instead of passwords wherever possible, and can also tunnel arbitrary traffic through an encrypted connection.
+
+## Key-based auth
+
+```bash
+ssh-keygen -t ed25519 -C "you@example.com"
+ssh-copy-id user@server
+ssh user@server
+```
+
+## Tunnels
+
+```bash
+ssh -L 8080:localhost:80 user@server   # forward a remote port to your machine
+ssh -N -f -L 5432:db-internal:5432 user@bastion
+```
+
+That second pattern — tunneling into an internal database through a bastion host — is one of the most common real-world uses of SSH beyond just logging in.

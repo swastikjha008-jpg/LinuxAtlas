@@ -1,0 +1,21 @@
+---
+title: systemd basics
+slug: systemd-basics
+---
+
+## Overview
+
+systemd manages services as units. `systemctl` starts, stops, enables, and inspects them, while `journalctl` reads their logs — together they're the two commands you'll reach for most on any modern distro.
+
+## Common commands
+
+```bash
+sudo systemctl status nginx
+sudo systemctl enable --now docker   # enable at boot and start now
+sudo systemctl restart ssh
+journalctl -u nginx -f               # follow nginx's logs live
+```
+
+## Unit files
+
+A unit file describes how systemd should run something — what command to execute, what it depends on, and when it should start. User-defined units typically live in `/etc/systemd/system/`.

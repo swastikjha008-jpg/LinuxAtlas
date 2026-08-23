@@ -1,0 +1,53 @@
+{
+  "name": "linuxatlas",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
+    "prisma:studio": "prisma studio",
+    "verify:seed": "tsx scripts/verify-seed-integrity.ts",
+    "verify:search": "tsx scripts/verify-search.ts",
+    "verify:validation": "tsx scripts/verify-validation.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^6.19.3",
+    "client-only": "^0.0.1",
+    "clsx": "2.1.1",
+    "framer-motion": "11.15.0",
+    "fuse.js": "^7.5.0",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "0.469.0",
+    "next": "15.5.23",
+    "pg": "^8.23.0",
+    "prisma": "^6.19.3",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-markdown": "^10.1.0",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "2.6.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.5",
+    "@types/pg": "^8.23.1",
+    "@types/react": "19.0.6",
+    "@types/react-dom": "19.0.3",
+    "autoprefixer": "10.4.20",
+    "postcss": "^8.5.26",
+    "tailwindcss": "3.4.17",
+    "tsx": "^4.23.12",
+    "typescript": "5.7.3"
+  }
+}

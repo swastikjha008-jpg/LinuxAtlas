@@ -1,0 +1,30 @@
+---
+title: Fedora
+slug: fedora
+---
+
+## Overview
+
+Fedora tracks upstream software closely, often shipping the newest kernel and GNOME releases before other distributions catch up. If you want to see where Linux is heading in six months, Fedora usually already has it.
+
+## Philosophy
+
+Fedora's four foundations are Freedom, Friends, Features, and First — it acts as an upstream proving ground for Red Hat Enterprise Linux, meaning what stabilizes in Fedora tends to show up in RHEL a few years later.
+
+## Installation
+
+Anaconda, Fedora's graphical installer, also powers RHEL and CentOS installs — learning it here transfers directly to enterprise Red Hat environments.
+
+## Package Management
+
+dnf manages RPM packages with fast, resolvable dependency handling and delta updates:
+
+```bash
+sudo dnf upgrade
+sudo dnf install <package>
+dnf history      # view past transactions, with rollback support
+```
+
+## Filesystem
+
+btrfs is the default filesystem since Fedora 33, enabling snapshots out of the box — `dnf` transactions can be trivially rolled back at the filesystem level if an update goes wrong.

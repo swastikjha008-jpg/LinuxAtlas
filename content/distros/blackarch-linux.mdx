@@ -1,0 +1,29 @@
+---
+title: BlackArch Linux
+slug: blackarch-linux
+---
+
+## Overview
+
+BlackArch is an Arch Linux–based penetration testing distribution with one of the largest security-tool repositories of any distro — thousands of tools, installable individually or by category, layered on top of a standard Arch install.
+
+## Philosophy
+
+Rather than being a standalone distribution most people install fresh, BlackArch is commonly added as a repository on top of an existing Arch system, letting users pull in exactly the security tooling they need without a full OS switch.
+
+## Installation
+
+BlackArch ships both a full live ISO and a script (`strap.sh`) that adds the BlackArch repository to an existing Arch installation — the latter is the more common path for experienced users.
+
+## Package Management
+
+pacman, extended with BlackArch's own repository:
+
+```bash
+sudo pacman -Syu
+sudo pacman -S blackarch-webapp   # install a whole tool category
+```
+
+## Filesystem
+
+No opinion beyond standard Arch — ext4 or btrfs, chosen the same way as any Arch install.

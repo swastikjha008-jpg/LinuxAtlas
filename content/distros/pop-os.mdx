@@ -1,0 +1,29 @@
+---
+title: Pop!_OS
+slug: pop-os
+---
+
+## Overview
+
+Pop!_OS is System76's Ubuntu-based distribution, tuned for their own hardware line but freely downloadable — strong out-of-the-box NVIDIA support and a tiling-friendly GNOME variant (COSMIC in newer releases) are its signatures.
+
+## Philosophy
+
+Pop!_OS targets developers and creative professionals who want Ubuntu's stability with better defaults for GPU workloads, window management, and keyboard-driven workflows.
+
+## Installation
+
+The installer offers a distinct choice up front between NVIDIA and non-NVIDIA images, avoiding the post-install driver hunt common on other distros.
+
+## Package Management
+
+apt underneath, plus Pop!_Shop and System76's own PPAs for hardware-specific packages:
+
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install <package>
+```
+
+## Filesystem
+
+ext4 by default; the installer also offers a straightforward full-disk encryption option during setup.
